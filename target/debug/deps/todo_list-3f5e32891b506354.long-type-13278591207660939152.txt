@@ -1,2 +1,0 @@
-impl DoubleEndedIterator + Iterator<Item = cursive::utils::span::Span<'_, _>> + ExactSizeIterator
-std::string::String: From<impl DoubleEndedIterator + Iterator<Item = cursive::utils::span::Span<'_, _>> + ExactSizeIterator>

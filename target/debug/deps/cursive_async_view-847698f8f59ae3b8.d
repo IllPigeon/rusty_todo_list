@@ -1,9 +1,0 @@
-C:\Users\baile\OneDrive\Desktop\Projects\rust\todo_list\target\debug\deps\cursive_async_view-847698f8f59ae3b8.d: C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\cursive-async-view-0.8.0\src\lib.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\cursive-async-view-0.8.0\src\infinite.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\cursive-async-view-0.8.0\src\progress.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\cursive-async-view-0.8.0\src\utils.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\cursive-async-view-0.8.0\src\../README.md
-
-C:\Users\baile\OneDrive\Desktop\Projects\rust\todo_list\target\debug\deps\libcursive_async_view-847698f8f59ae3b8.rmeta: C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\cursive-async-view-0.8.0\src\lib.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\cursive-async-view-0.8.0\src\infinite.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\cursive-async-view-0.8.0\src\progress.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\cursive-async-view-0.8.0\src\utils.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\cursive-async-view-0.8.0\src\../README.md
-
-C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\cursive-async-view-0.8.0\src\lib.rs:
-C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\cursive-async-view-0.8.0\src\infinite.rs:
-C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\cursive-async-view-0.8.0\src\progress.rs:
-C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\cursive-async-view-0.8.0\src\utils.rs:
-C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\cursive-async-view-0.8.0\src\../README.md:
