@@ -1,0 +1,13 @@
+[package]
+name = "todo_list"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+console = "0.16.1"
+dialoguer = "0.12.0"
+rusqlite = "0.37.0"
+crossterm = "0.29.0"
+cursive = "0.21.1"
+text-style = "0.3.0"
+cursive-async-view = "0.8.0"
