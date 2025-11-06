@@ -1,0 +1,11 @@
+C:\Users\baile\OneDrive\Desktop\Projects\rust\todo_list\target\debug\deps\console-e856f2c9934d441a.d: C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\lib.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\common_term.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\kb.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\term.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\utils.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\windows_term\mod.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\ansi.rs
+
+C:\Users\baile\OneDrive\Desktop\Projects\rust\todo_list\target\debug\deps\libconsole-e856f2c9934d441a.rmeta: C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\lib.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\common_term.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\kb.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\term.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\utils.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\windows_term\mod.rs C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\ansi.rs
+
+C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\lib.rs:
+C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\common_term.rs:
+C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\kb.rs:
+C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\term.rs:
+C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\utils.rs:
+C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\windows_term\mod.rs:
+C:\Users\baile\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\console-0.16.1\src\ansi.rs:
