@@ -12,7 +12,8 @@ use std::{fs, thread, time};
 
 /** Used for storing todo list task data */
 struct Task {
-    name: String
+    name: String,
+    completed: bool
 }
 
 
@@ -22,32 +23,24 @@ struct Task {
  * Purpose of this project was to become familiar with Rust's crate ecosystem.
  */
 fn main() {
-    
     // main cursive instance
     let mut siv = cursive::default();
     siv.add_global_callback('q', |s| s.quit());
-
-
     // connection and path of database, connection is needed for database creationa & transactions
     let db_path = "./src/resources/db/tasks.db";
     let conn = Connection::open(db_path).expect("Failed to open the database");
     create_table(&conn).expect("Error initializing database");
-
     // Retrieving data as vector to add into view
     let task_list = retrieve_list(&conn);
-
     // very important for keeping single instance of database connection to be passed in different functions
     siv.set_user_data(conn);
 
-
-
     let start = time::Instant::now();
     let async_view = AsyncProgressView::new(&mut siv, move || {
-
         if start.elapsed().as_secs() < 5 {
             AsyncProgressState::Pending(start.elapsed().as_secs_f32() / 5f32)
-            
-        } else {
+        } 
+        else {
             // Creating view to populate with clone of fetched data of tasks
             let mut tasks_view = SelectView::<String>::new();
             tasks_view.add_all_str(task_list.clone());
@@ -76,9 +69,9 @@ fn main() {
 fn create_table(conn: &Connection) -> Result<()> {
     conn.execute(
         "CREATE TABLE IF NOT EXISTS tasks (
-            name TEXT PRIMARY KEY
+            name TEXT PRIMARY KEY,
+            completed BOOLEAN
     )", [])?;
-
     return Ok(());
 }
 
@@ -86,12 +79,13 @@ fn create_table(conn: &Connection) -> Result<()> {
 /** Used for retrieving todo list data to be displayed in the cursive view */
 fn retrieve_list(conn: &Connection) -> Vec<String> {
     let mut result_vec: Vec<String> = Vec::new();
+    let mut stmt = conn.prepare("SELECT name, completed FROM tasks").expect("Error retrieving tasks from database");
 
-    let mut stmt = conn.prepare("SELECT name FROM tasks").expect("Error retrieving tasks from database");
     let task_iter = stmt.query_map([], |row| {
         Ok(Task {
-            // task name is tied to row 0
-            name: row.get(0)?
+            // task name is tied to column 0, completion state is tied to column 1
+            name: row.get(0)?,
+            completed: row.get(1)?
         })
     });
 
@@ -104,9 +98,10 @@ fn retrieve_list(conn: &Connection) -> Vec<String> {
 
 /** Used for adding tasks to the todo list */
 fn add_todo(s: &mut Cursive) {
+
     // Used for inserting a todo list item into the database
     fn insert_data(conn: &Connection, task_name: &str) -> Result<()> {
-        conn.execute("INSERT INTO tasks (name) VALUES (?1)",[task_name])?;
+        conn.execute("INSERT INTO tasks (name, completed) VALUES (?1, ?2)", params![task_name, false])?;
         Ok(())
     }
 
@@ -115,11 +110,9 @@ fn add_todo(s: &mut Cursive) {
         s.call_on_name("tasks", |view: &mut SelectView<String>| {
             view.add_item_str(task_name);
         });
-
         s.with_user_data(|conn: &mut Connection| {
             insert_data(conn, task_name).expect("Failed to insert item");
         });
-        
         s.pop_layer();
     }
 
@@ -143,7 +136,7 @@ fn add_todo(s: &mut Cursive) {
 
 /** Used for removing a todo task */
 fn remove_todo(s: &mut Cursive) {
-
+    
     // Nested function for deleting task from database
     fn delete_data(conn: &Connection, task_data: &String) {
         conn.execute("DELETE FROM tasks WHERE (name) IS (?1)", [task_data]).expect("Error removing task");
@@ -167,18 +160,38 @@ fn remove_todo(s: &mut Cursive) {
 
 /** Used for updating status of a task to either be completed or incomplete */
 fn set_status(s: &mut Cursive, task: &str) {
-    let fin_task = SpannedString::styled(task, cursive::style::Effect::Strikethrough);
-    let mut tasks: cursive::views::ViewRef<SelectView> = s.find_name::<SelectView<String>>("tasks").unwrap();
+
+    // Nested function for retrieving status
+    fn get_status(conn: &Connection, task: &str) -> bool {
+        return conn.query_row("SELECT completed FROM tasks WHERE name = ?1", [task], |row| row.get(0)).unwrap_or(false);
+    }
     
+    // Nested function for updating status
+    fn update_status(conn: &Connection, task: &str, status: bool) {
+        conn.execute("UPDATE tasks SET completed = ?2 WHERE name IS ?1", params![task, !status]).expect("Error updating task status");
+    }
+
+    let mut tasks: cursive::views::ViewRef<SelectView> = s.find_name::<SelectView<String>>("tasks").unwrap();
     if let Some(id) = tasks.selected_id() {
         let task_data = tasks.get_item(id).map(|(_, data) | data.clone());
-
         tasks.remove_item(id);
-
         if let Some(data) = task_data {
-            tasks.insert_item(id, fin_task, data);
-            tasks.set_selection(id);
+            // Using connection that is stored in view to retrieve selected task status, then update it.
+            s.with_user_data(|conn: &mut Connection| {
+                let task_status = get_status(conn, task);
+                update_status(conn, task, task_status);
+                // If the task was false when selected, update it to finished since it was set to true with update and vice versa
+                if !task_status {
+                    let fin_task = SpannedString::styled(task, cursive::style::Effect::Strikethrough);
+                    tasks.insert_item(id, fin_task, data);
+                } 
+                else {
+                    let unfin_task = SpannedString::styled(task, cursive::style::Effect::Simple);
+                    tasks.insert_item(id, unfin_task, data);
+                }
+            });
         }
+        tasks.set_selection(id);
     }
 }
 
