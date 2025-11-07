@@ -5,6 +5,7 @@ use cursive::views::{TextView, Button, Dialog, EditView, LinearLayout, SelectVie
 use cursive_async_view::{AsyncProgressView, AsyncProgressState};
 use rusqlite::{params, Connection, Result};
 use std::{fs, thread, time};
+use cursive::utils::markup::StyledString;
 
 
 
@@ -41,9 +42,12 @@ fn main() {
             AsyncProgressState::Pending(start.elapsed().as_secs_f32() / 5f32)
         } 
         else {
-            // Creating view to populate with clone of fetched data of tasks
+            // Creating view to populate with clone of fetched data of tasks, plain text is data used for database operations, styled task is how its presented visually
             let mut tasks_view = SelectView::<String>::new();
-            tasks_view.add_all_str(task_list.clone());
+            for styled_task in task_list.clone() {
+                let plain_task = styled_task.source().to_string();
+                tasks_view.add_item(styled_task, plain_task);
+            }
 
             let tasks = tasks_view
                 .on_submit(set_status)
@@ -76,9 +80,9 @@ fn create_table(conn: &Connection) -> Result<()> {
 }
 
 
-/** Used for retrieving todo list data to be displayed in the cursive view */
-fn retrieve_list(conn: &Connection) -> Vec<String> {
-    let mut result_vec: Vec<String> = Vec::new();
+/** Used for retrieving todo list data to be displayed in the cursive view with styling data based on completion*/
+fn retrieve_list(conn: &Connection) -> Vec<StyledString> {
+    let mut result_vec: Vec<StyledString> = Vec::new();
     let mut stmt = conn.prepare("SELECT name, completed FROM tasks").expect("Error retrieving tasks from database");
 
     let task_iter = stmt.query_map([], |row| {
@@ -90,7 +94,19 @@ fn retrieve_list(conn: &Connection) -> Vec<String> {
     });
 
     for task in task_iter.expect("Failed to query tasks") {
-        result_vec.push(task.expect("Failed to push task").name);
+        let unwrapped_task = task.unwrap();
+        if !unwrapped_task.completed {
+            let unfin_task = SpannedString::styled(
+                unwrapped_task.name, 
+                cursive::style::Effect::Simple);
+            result_vec.push(unfin_task);
+        }
+        else {
+            let fin_task = SpannedString::styled(
+                unwrapped_task.name, 
+                cursive::style::Effect::Strikethrough);
+            result_vec.push(fin_task);
+        }
     }
     return result_vec;
 }
