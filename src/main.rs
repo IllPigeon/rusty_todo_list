@@ -1,10 +1,10 @@
 use cursive::utils::span::SpannedString;
 use cursive::Cursive;
 use cursive::view::{Nameable, Resizable, Scrollable};
-use cursive::views::{TextView, Button, Dialog, EditView, LinearLayout, SelectView};
+use cursive::views::{Button, Dialog, EditView, LinearLayout, SelectView};
 use cursive_async_view::{AsyncProgressView, AsyncProgressState};
 use rusqlite::{params, Connection, Result};
-use std::{fs, thread, time};
+use std::{time};
 use cursive::utils::markup::StyledString;
 
 
